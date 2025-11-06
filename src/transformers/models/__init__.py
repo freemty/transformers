@@ -351,6 +351,7 @@ if TYPE_CHECKING:
     from .unispeech_sat import *
     from .univnet import *
     from .upernet import *
+    from .vggt import *
     from .vaultgemma import *
     from .video_llama_3 import *
     from .video_llava import *

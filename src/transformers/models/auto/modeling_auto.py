@@ -399,6 +399,7 @@ MODEL_MAPPING_NAMES = OrderedDict(
         ("unispeech", "UniSpeechModel"),
         ("unispeech-sat", "UniSpeechSatModel"),
         ("univnet", "UnivNetModel"),
+        ("vggt", "VGGTModel"),
         ("van", "VanModel"),
         ("vaultgemma", "VaultGemmaModel"),
         ("video_llama_3", "VideoLlama3Model"),
