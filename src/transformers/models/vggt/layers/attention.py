@@ -47,6 +47,15 @@ class Attention(nn.Module):
         self.proj_drop = nn.Dropout(proj_drop)
         self.rope = rope
 
+        # hard for log
+        self.q_identity = nn.Identity()
+        self.k_identity = nn.Identity()
+        self.v_identity = nn.Identity()
+        self.q_prerope_identity = nn.Identity()
+        self.k_prerope_identity = nn.Identity()
+        self.q_prenorm_identity = nn.Identity()
+        self.k_prenorm_identity = nn.Identity()
+
     def forward(self, x: Tensor, pos=None) -> Tensor:
         B, N, C = x.shape
         qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, self.head_dim).permute(2, 0, 3, 1, 4)
@@ -56,6 +65,8 @@ class Attention(nn.Module):
         if self.rope is not None:
             q = self.rope(q, pos)
             k = self.rope(k, pos)
+
+        _, _, _ = self.q_identity(q), self.k_identity(k),  self.v_identity(v)
 
         if self.fused_attn:
             x = F.scaled_dot_product_attention(q, k, v, dropout_p=self.attn_drop.p if self.training else 0.0)

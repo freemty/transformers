@@ -193,6 +193,7 @@ def make_list_of_images(images, expected_ndims: int = 3) -> list[ImageInput]:
                 f" {images.ndim} dimensions."
             )
         return images
+    
     raise ValueError(
         f"Invalid image type. Expected either PIL.Image.Image, numpy.ndarray, or torch.Tensor, but got {type(images)}."
     )
