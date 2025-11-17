@@ -190,6 +190,12 @@ class BaseImageProcessorFast(BaseImageProcessor):
     unused_kwargs = None
 
     def __init__(self, **kwargs: Unpack[ImagesKwargs]):
+        """
+        Args:
+            image_seq_length (`int`, *optional*):
+                每张图像应展开成的视觉 token 数；当模型需要固定长度的图像 token
+                序列时，可通过该参数（或对应属性）覆盖默认行为。
+        """
         super().__init__(**kwargs)
         kwargs = self.filter_out_unused_kwargs(kwargs)
         size = kwargs.pop("size", self.size)
