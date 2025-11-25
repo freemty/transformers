@@ -273,6 +273,11 @@ class DINOv3ViTAttention(nn.Module):
         self.q_proj = nn.Linear(self.embed_dim, self.embed_dim, bias=config.query_bias)
         self.o_proj = nn.Linear(self.embed_dim, self.embed_dim, bias=config.proj_bias)
 
+        # hard for log
+        self.q_identity = nn.Identity()
+        self.k_identity = nn.Identity()
+        self.v_identity = nn.Identity()
+
     def forward(
         self,
         hidden_states: torch.Tensor,
@@ -294,6 +299,7 @@ class DINOv3ViTAttention(nn.Module):
 
         cos, sin = position_embeddings
         query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin)
+        _, _ , _ = self.q_identity(query_states), self.k_identity(key_states), self.v_identity(value_states)
 
         attention_interface: Callable = eager_attention_forward
         if self.config._attn_implementation != "eager":
